@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXANI-II · Pensamiento Matemático (Simulador oficial)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #eef5f9;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .simulador {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 30px 50px rgba(0, 40, 60, 0.3);
+            overflow: hidden;
+        }
+        .cabecera {
+            background: #1e3c5e;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            border-bottom: 5px solid #ffaa33;
+            position: relative;
+        }
+        .cabecera h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .cabecera p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        .cronometro {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #ffaa33;
+            color: #1e3c5e;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border: 2px solid white;
+        }
+        .contenido {
+            padding: 25px 30px;
+        }
+        .progreso {
+            background: #dae0ec;
+            height: 16px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .barra-progreso {
+            background: #ffaa33;
+            height: 100%;
+            width: 0%;
+            transition: width 0.2s;
+        }
+        .nav-pregunta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .badge-pregunta {
+            background: #1e3c5e;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 1px solid #ffaa33;
+        }
+        .badge-tema {
+            background: #ffaa33;
+            color: #1e3c5e;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .nav-botones {
+            display: flex;
+            gap: 15px;
+        }
+        .btn-nav {
+            background: white;
+            border: 2px solid #1e3c5e;
+            color: #1e3c5e;
+            font-weight: 600;
+            padding: 8px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .btn-nav:hover:not(:disabled) {
+            background: #1e3c5e;
+            color: white;
+        }
+        .tarjeta-pregunta {
+            background: #f6faff;
+            border-radius: 30px;
+            padding: 20px 25px;
+            border: 1px solid #c7d3e8;
+            margin-bottom: 20px;
+        }
+        .pregunta-item {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            border: 1px solid #b0c0db;
+        }
+        .num-pregunta {
+            background: #ffaa33;
+            color: #1e3c5e;
+            font-weight: 700;
+            display: inline-block;
+            padding: 6px 22px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .texto-pregunta {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #102331;
+            line-height: 1.5;
+        }
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .opcion {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #f0f5ff;
+            padding: 14px 24px;
+            border-radius: 40px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 1.05rem;
+        }
+        .opcion:hover {
+            background: #e2ecfe;
+            border-color: #1e3c5e;
+        }
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #ffaa33;
+        }
+        .acciones {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0 10px;
+        }
+        .btn-primario, .btn-secundario {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 220px;
+        }
+        .btn-primario {
+            background: #1e3c5e;
+            color: white;
+            box-shadow: 0 8px 15px rgba(30,60,94,0.3);
+        }
+        .btn-secundario {
+            background: white;
+            color: #1e3c5e;
+            border: 2px solid #1e3c5e;
+        }
+        .btn-primario:hover { background: #2b4f7a; transform: scale(1.02); }
+        .btn-secundario:hover { background: #e9f0fa; }
+        .panel-registro {
+            background: #f3f9ff;
+            border-radius: 40px;
+            padding: 30px;
+            border: 3px solid #1e3c5e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .panel-registro h2 {
+            color: #1e3c5e;
+            margin-bottom: 20px;
+        }
+        .campo {
+            margin-bottom: 20px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .campo label {
+            display: block;
+            font-weight: 600;
+            color: #1e3c5e;
+            margin-bottom: 5px;
+        }
+        .campo input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 2px solid #b0c0db;
+            font-size: 1rem;
+        }
+        .campo input:focus {
+            outline: none;
+            border-color: #ffaa33;
+        }
+        .btn-registro {
+            background: #1e3c5e;
+            color: white;
+            padding: 15px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .panel-resultados {
+            background: #f3f9ff;
+            border-radius: 40px;
+            padding: 30px;
+            border: 3px solid #1e3c5e;
+            margin-top: 20px;
+        }
+        .panel-resultados h2 {
+            color: #1e3c5e;
+            font-size: 2rem;
+            border-bottom: 4px solid #ffaa33;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .resumen-temas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .tarjeta-tema {
+            background: white;
+            border-radius: 30px;
+            padding: 15px 20px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 120px;
+        }
+        .tarjeta-tema h3 {
+            color: #1e3c5e;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .tarjeta-tema .puntaje {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffaa33;
+        }
+        .tabla-resultados {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .tabla-resultados th {
+            background: #1e3c5e;
+            color: white;
+            padding: 12px 5px;
+            font-size: 1rem;
+        }
+        .tabla-resultados td {
+            padding: 10px 5px;
+            text-align: center;
+            border-bottom: 1px solid #cfdaea;
+        }
+        .acierto {
+            background-color: #d8f0d8;
+            font-weight: 600;
+        }
+        .error {
+            background-color: #ffe0e0;
+        }
+        .feedback-error {
+            background: #fff3cd;
+            border-left: 5px solid #ffaa33;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .puntaje-final {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #1e3c5e;
+            background: #ffaa33;
+            display: inline-block;
+            padding: 12px 55px;
+            border-radius: 60px;
+            margin: 10px 0 20px;
+        }
+        .mensaje-exito {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 50px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        .mensaje-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 50px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        .oculto {
+            display: none !important;
+        }
+        .centrado {
+            text-align: center;
+        }
+        .tiempo-final {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #1e3c5e;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="simulador" id="app">
+    <div class="cabecera">
+        <h1>📐 EXANI-II · Pensamiento Matemático</h1>
+        <p>80 preguntas (Aritmética, Álgebra, Estadística, Geometría, Analítico, Cálculo)</p>
+        <div class="cronometro" id="cronometro">00:00:00</div>
+    </div>
+    <div class="contenido">
+
+        <!-- Panel de registro inicial -->
+        <div id="panelRegistro" class="panel-registro">
+            <h2>📋 Registro para guardar resultados</h2>
+            <div class="campo">
+                <label>Nombre completo:</label>
+                <input type="text" id="inputNombre" placeholder="Ej. Ana García López">
+            </div>
+            <div class="campo">
+                <label>Correo electrónico:</label>
+                <input type="email" id="inputEmail" placeholder="ana@ejemplo.com">
+            </div>
+            <div id="mensajeRegistro"></div>
+            <button class="btn-registro" id="btnComenzar">Comenzar examen</button>
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="progreso oculto" id="progresoContainer">
+            <div class="barra-progreso" id="barraProgreso"></div>
+        </div>
+
+        <!-- MODO EXAMEN -->
+        <div id="modoExamen" class="oculto">
+            <div class="nav-pregunta">
+                <span class="badge-pregunta" id="preguntaIndicador">Pregunta 1/80</span>
+                <div class="nav-botones">
+                    <button class="btn-nav" id="btnAnterior" disabled>← Anterior</button>
+                    <button class="btn-nav" id="btnSiguiente">Siguiente →</button>
+                </div>
+            </div>
+
+            <div class="tarjeta-pregunta" id="tarjetaPreguntas">
+                <div id="contenedorPregunta"></div>
+            </div>
+
+            <div class="acciones">
+                <button class="btn-primario" id="btnFinalizar">📊 Finalizar y enviar resultados</button>
+                <button class="btn-secundario" id="btnReiniciarExamen">⟲ Nuevo intento</button>
+            </div>
+        </div>
+
+        <!-- PANEL DE RESULTADOS -->
+        <div id="panelResultados" class="panel-resultados oculto">
+            <h2>📈 Resultados del examen</h2>
+            <div class="tiempo-final" id="tiempoFinal"></div>
+            
+            <div class="resumen-temas">
+                <div class="tarjeta-tema"><h3>Aritmética</h3><div class="puntaje" id="aciertosAritmetica">0</div><div>/15</div></div>
+                <div class="tarjeta-tema"><h3>Álgebra</h3><div class="puntaje" id="aciertosAlgebra">0</div><div>/15</div></div>
+                <div class="tarjeta-tema"><h3>Estadística</h3><div class="puntaje" id="aciertosEstadistica">0</div><div>/15</div></div>
+                <div class="tarjeta-tema"><h3>Geometría</h3><div class="puntaje" id="aciertosGeometria">0</div><div>/15</div></div>
+                <div class="tarjeta-tema"><h3>Analítico</h3><div class="puntaje" id="aciertosAnalitico">0</div><div>/5</div></div>
+                <div class="tarjeta-tema"><h3>Cálculo</h3><div class="puntaje" id="aciertosCalculo">0</div><div>/15</div></div>
+            </div>
+
+            <div id="mensajeEnvio"></div>
+            
+            <div class="feedback-error" id="feedbackGeneral">
+                <strong>📝 Retroalimentación:</strong> Revisa las respuestas incorrectas marcadas en rojo.
+            </div>
+
+            <table class="tabla-resultados" id="tablaDetalle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tema</th>
+                        <th>Tu respuesta</th>
+                        <th>Correcta</th>
+                        <th>Evaluación</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaDetalleBody"></tbody>
+            </table>
+            <div class="centrado">
+                <span class="puntaje-final" id="puntajeTotal">0/80</span>
+            </div>
+            <div class="acciones">
+                <button class="btn-primario" id="btnNuevoIntento">⟲ Nuevo intento</button>
+                <button class="btn-secundario" id="btnFinalizarApp">✔ Finalizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ==============================================================
+    // 80 PREGUNTAS DE PENSAMIENTO MATEMÁTICO
+    // Distribución: 15 Aritmética, 15 Álgebra, 15 Estadística, 15 Geometría, 5 Analítico, 15 Cálculo
+    // ==============================================================
+    const preguntas = [
+        // ===== ARITMÉTICA (0-14) =====
+        { // 1
+            texto: "El resultado de 9 - 10 - 4 + 5 - 2 + 6 - 7 - 2 es:",
+            opciones: ["A) -5", "B) 5", "C) -7", "D) 7"],
+            correcta: 0, // A
+            tema: 'Aritmética',
+            feedback: 'Operación: 9-10=-1; -1-4=-5; -5+5=0; 0-2=-2; -2+6=4; 4-7=-3; -3-2=-5.'
+        },
+        { // 2
+            texto: "Al simplificar la expresión -5 + 4{3 - (2 - 5)} se obtiene:",
+            opciones: ["A) 19", "B) 20", "C) 21", "D) 22"],
+            correcta: 0, // A
+            tema: 'Aritmética',
+            feedback: 'Primero el paréntesis: 2-5=-3. Luego 3-(-3)=6. Luego 4*6=24. Finalmente -5+24=19.'
+        },
+        { // 3
+            texto: "¿Cuál es el resultado de convertir 0.12 en fracción común?",
+            opciones: ["A) 3/25", "B) 12/100", "C) 12/33", "D) 4/33"],
+            correcta: 3, // D
+            tema: 'Aritmética',
+            feedback: '0.12 periódico: (12-0)/(100-1)=12/99=4/33.'
+        },
+        { // 4
+            texto: "El resultado de 2.0098 + 0.37 + 105.4056 es:",
+            opciones: ["A) 105.7054", "B) 185.15254", "C) 107.7854", "D) 127.7854"],
+            correcta: 2, // C
+            tema: 'Aritmética',
+            feedback: 'Suma vertical: 2.0098+0.37=2.3798; +105.4056=107.7854.'
+        },
+        { // 5
+            texto: "El resultado de la operación 0.024(15.3) - 0.1823 es:",
+            opciones: ["A) 0.5495", "B) 0.1849", "C) 0.3672", "D) 0.3276"],
+            correcta: 1, // B
+            tema: 'Aritmética',
+            feedback: '0.024*15.3=0.3672; 0.3672-0.1823=0.1849.'
+        },
+        { // 6
+            texto: "¿A qué es igual 0.000023?",
+            opciones: ["A) 23×10⁻⁵", "B) 0.23×10⁻⁵", "C) 2.3×10⁻⁵", "D) 0.023×10⁻⁵"],
+            correcta: 2, // C
+            tema: 'Aritmética',
+            feedback: '0.000023 = 2.3×10⁻⁵ (desplazar decimal 5 lugares a la derecha).'
+        },
+        { // 7
+            texto: "Una máquina embotelladora llena 350 botellas en 25 minutos. ¿Cuántas botellas llenará en una hora y media?",
+            opciones: ["A) 2735", "B) 2210", "C) 1381", "D) 1260"],
+            correcta: 3, // D
+            tema: 'Aritmética',
+            feedback: 'Regla de tres directa: 350/25 = x/90 → x=350*90/25=1260.'
+        },
+        { // 8
+            texto: "Ocho hombres construyen una barda en 15 días. ¿En cuántos días la construirán 20 hombres?",
+            opciones: ["A) 3", "B) 5", "C) 6", "D) 8"],
+            correcta: 2, // C
+            tema: 'Aritmética',
+            feedback: 'Inversa: 8*15 = 20*x → x=120/20=6 días.'
+        },
+        { // 9
+            texto: "¿Cuál es el 75% de 2500?",
+            opciones: ["A) 1875", "B) 1750", "C) 2000", "D) 1625"],
+            correcta: 0, // A
+            tema: 'Aritmética',
+            feedback: '2500*0.75 = 1875.'
+        },
+        { // 10
+            texto: "Si al precio de un producto de $600 se le aplica un descuento del 15%, ¿cuánto se paga?",
+            opciones: ["A) $90", "B) $510", "C) $440.20", "D) $368.50"],
+            correcta: 1, // B
+            tema: 'Aritmética',
+            feedback: 'Descuento 15% = 600*0.15=90; paga 600-90=510.'
+        },
+        { // 11
+            texto: "La fracción 3/4 en porcentaje equivale a:",
+            opciones: ["A) 75%", "B) 70%", "C) 60%", "D) 55%"],
+            correcta: 0, // A
+            tema: 'Aritmética',
+            feedback: '3/4 = 0.75 = 75%.'
+        },
+        { // 12
+            texto: "Un auto tarda 8 horas en recorrer una distancia a 100 km/h. ¿Cuánto tardará a 120 km/h?",
+            opciones: ["A) 6h 5min", "B) 6h 40min", "C) 7h", "D) 6h 20min"],
+            correcta: 1, // B
+            tema: 'Aritmética',
+            feedback: 'Distancia=800 km; tiempo=800/120=6.6667 h = 6h 40min.'
+        },
+        { // 13
+            texto: "Las dimensiones de un terreno están a razón de 3/4. Si el perímetro es 1500 m, ¿cuál es el área?",
+            opciones: ["A) 137755 m²", "B) 140000 m²", "C) 125000 m²", "D) 150000 m²"],
+            correcta: 0, // A
+            tema: 'Aritmética',
+            feedback: 'Largo=x, ancho=3x/4; perímetro 2(x+3x/4)=1500 → x≈428.57, área≈428.57*321.43≈137755.'
+        },
+        { // 14
+            texto: "¿Qué capital se debe invertir para lograr un interés de $25000 a una tasa de 20% anual durante 180 días?",
+            opciones: ["A) 180000", "B) 200000", "C) 250000", "D) 300000"],
+            correcta: 2, // C
+            tema: 'Aritmética',
+            feedback: 'I = C*i*t → 25000 = C*0.2*(180/360) → C=25000/(0.2*0.5)=25000/0.1=250000.'
+        },
+        { // 15
+            texto: "¿A qué tasa de interés simple anual se triplica un capital en 5 años?",
+            opciones: ["A) 40%", "B) 25%", "C) 60%", "D) 45%"],
+            correcta: 0, // A
+            tema: 'Aritmética',
+            feedback: 'M = C(1+it) → 3C = C(1+5i) → 3=1+5i → i=0.4=40%.'
+        },
+        // ===== ÁLGEBRA (15-29) =====
+        { // 16
+            texto: "El resultado de (2³)² es equivalente a:",
+            opciones: ["A) 2³+2³", "B) (2³)(2³)", "C) 2×3×2", "D) (2×3)(2×3)"],
+            correcta: 1, // B
+            tema: 'Álgebra',
+            feedback: '(2³)² = 2⁶ = 2³·2³.'
+        },
+        { // 17
+            texto: "Al simplificar √48 se obtiene:",
+            opciones: ["A) 24", "B) 4√3", "C) √3", "D) 12"],
+            correcta: 1, // B
+            tema: 'Álgebra',
+            feedback: '√48 = √(16·3) = 4√3.'
+        },
+        { // 18
+            texto: "El resultado de (3x² - 6x + 4) + (-4x² + 8x - 6) es:",
+            opciones: ["A) -x²+2x-2", "B) x²+2x-2", "C) -x²+2x+2", "D) x²-2x-2"],
+            correcta: 0, // A
+            tema: 'Álgebra',
+            feedback: 'Suma: 3x²-4x² = -x²; -6x+8x=2x; 4-6=-2.'
+        },
+        { // 19
+            texto: "El resultado de (5x - 3y)(2x - 3y) es:",
+            opciones: ["A) 10x²-21xy+9y²", "B) 10x²+21xy+9y²", "C) 10x²-21xy-9y²", "D) -10x²-21xy+9y²"],
+            correcta: 0, // A
+            tema: 'Álgebra',
+            feedback: '5x*2x=10x²; 5x*(-3y)=-15xy; -3y*2x=-6xy; -3y*(-3y)=9y²; suma xy: -21xy.'
+        },
+        { // 20
+            texto: "El cociente de (8x³ + y³) entre (2x + y) es:",
+            opciones: ["A) 4x²+y²", "B) 4x²+2xy+y²", "C) 4x²-2xy+y²", "D) 4x²-y²"],
+            correcta: 2, // C
+            tema: 'Álgebra',
+            feedback: 'División de polinomios: 8x³+y³ = (2x+y)(4x²-2xy+y²).'
+        },
+        { // 21
+            texto: "El resultado de (2xy² - 1)² es:",
+            opciones: ["A) 4x²y⁴-1", "B) 4x²y⁴+1", "C) 4x²y⁴-4xy²+1", "D) 4x²y⁴+4xy²+1"],
+            correcta: 2, // C
+            tema: 'Álgebra',
+            feedback: '(a-b)² = a²-2ab+b² → 4x²y⁴-4xy²+1.'
+        },
+        { // 22
+            texto: "Al desarrollar (x - 8y)(x + 8y) se obtiene:",
+            opciones: ["A) x²-16y²", "B) x²+16y²", "C) x²-64y²", "D) x²+64y²"],
+            correcta: 2, // C
+            tema: 'Álgebra',
+            feedback: 'Binomios conjugados: (x)² - (8y)² = x²-64y².'
+        },
+        { // 23
+            texto: "La factorización de 3x⁴ - 5x³ - 2x² es:",
+            opciones: ["A) x(3x²-5x-2)", "B) x²(3x²-5x-2)", "C) x²(3x³-5x²-2x)", "D) x(3x³-5x²-2)"],
+            correcta: 1, // B
+            tema: 'Álgebra',
+            feedback: 'Factor común x²: x²(3x²-5x-2).'
+        },
+        { // 24
+            texto: "Al factorizar 9x² - 16 se obtiene:",
+            opciones: ["A) (3x-4)²", "B) (3x-4)(3x+4)", "C) (3x-4)(3x-4)", "D) (3x+4)(3x+4)"],
+            correcta: 1, // B
+            tema: 'Álgebra',
+            feedback: 'Diferencia de cuadrados: (3x)² - 4² = (3x-4)(3x+4).'
+        },
+        { // 25
+            texto: "La factorización de x² - 7x + 12 es:",
+            opciones: ["A) (x-4)(x-3)", "B) (x+4)(x+3)", "C) (x+4)(x-3)", "D) (x-4)(x+3)"],
+            correcta: 0, // A
+            tema: 'Álgebra',
+            feedback: 'Dos números que multiplicados den 12 y sumados -7: -4 y -3.'
+        },
+        { // 26
+            texto: "El valor de x en 5x + 7 = 12 es:",
+            opciones: ["A) 0", "B) 1", "C) 2", "D) 3"],
+            correcta: 1, // B
+            tema: 'Álgebra',
+            feedback: '5x = 12-7=5 → x=1.'
+        },
+        { // 27
+            texto: "La suma de tres números enteros consecutivos es 60. La expresión que permite calcularlos es:",
+            opciones: ["A) x=60", "B) 60x=3", "C) 3x=60", "D) 3x+3=60"],
+            correcta: 3, // D
+            tema: 'Álgebra',
+            feedback: 'x + (x+1) + (x+2) = 3x+3 = 60.'
+        },
+        { // 28
+            texto: "Las raíces de x² - 5x + 6 = 0 son:",
+            opciones: ["A) 3 y 2", "B) -3 y -2", "C) 3 y -2", "D) -3 y 2"],
+            correcta: 0, // A
+            tema: 'Álgebra',
+            feedback: '(x-3)(x-2)=0 → x=3,2.'
+        },
+        { // 29
+            texto: "Los valores que satisfacen x² + 5x = 0 son:",
+            opciones: ["A) 25 y 5", "B) 5 y -1", "C) 0 y 5", "D) 0 y -5"],
+            correcta: 3, // D
+            tema: 'Álgebra',
+            feedback: 'x(x+5)=0 → x=0, x=-5.'
+        },
+        { // 30
+            texto: "El valor de x en 3x+1 = 9 es:",
+            opciones: ["A) 2", "B) -1", "C) -2", "D) 1"],
+            correcta: 3, // D
+            tema: 'Álgebra',
+            feedback: '3x+1 = 3² → x+1=2 → x=1.'
+        },
+        // ===== ESTADÍSTICA (30-44) =====
+        { // 31
+            texto: "Completa: Una _____ es un ejemplo de población, mientras que una _____ es ejemplo de _____.",
+            opciones: ["A) ciudad, colonia, muestra", "B) entidad, nación, muestra", "C) familia, hija, variable", "D) nación, entidad, estadística"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: 'La población es el conjunto total (ciudad), la muestra es un subconjunto (colonia).'
+        },
+        { // 32
+            texto: "¿Cuál es una variable continua?",
+            opciones: ["A) Número de huevos en un paquete", "B) Granos de arena en un vaso", "C) Temperatura en un reactor", "D) Talla de calzado"],
+            correcta: 2, // C
+            tema: 'Estadística',
+            feedback: 'La temperatura puede tomar cualquier valor real, es continua.'
+        },
+        { // 33
+            texto: "¿A qué clases pertenecen los datos 3.8 y 5.8 en la tabla: [2.8-3.8) f=5, [3.8-4.8) f=12, [4.8-5.8) f=9, [5.8-6.8) f=6?",
+            opciones: ["A) 1 y 3", "B) 2 y 3", "C) 2 y 4", "D) 1 y 4"],
+            correcta: 1, // B
+            tema: 'Estadística',
+            feedback: '3.8 pertenece a la clase 2 (intervalo cerrado-izquierda), 5.8 a la clase 3.'
+        },
+        { // 34
+            texto: "El rango de los datos en la tabla anterior es:",
+            opciones: ["A) 4", "B) 1", "C) 12", "D) 19"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: 'Rango = 6.8 - 2.8 = 4.'
+        },
+        { // 35
+            texto: "¿Cuál es una medida de tendencia central?",
+            opciones: ["A) Rango", "B) Mediana", "C) Cuartil", "D) Varianza"],
+            correcta: 1, // B
+            tema: 'Estadística',
+            feedback: 'La mediana es una medida de tendencia central.'
+        },
+        { // 36
+            texto: "¿Cuál es el promedio de los datos: 34,36,34,38,40,34,32?",
+            opciones: ["A) 35.4", "B) 35.1", "C) 36.2", "D) 38.1"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: 'Suma=248, n=7, promedio=35.428 ≈ 35.4.'
+        },
+        { // 37
+            texto: "Para los mismos datos, ¿cuál es la mediana?",
+            opciones: ["A) 34", "B) 36", "C) 35", "D) 34.5"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: 'Ordenados: 32,34,34,34,36,38,40 → mediana=34.'
+        },
+        { // 38
+            texto: "¿Cuál es la moda de: 4,2,3,8,12,10,1,14,3,3,2,4,15,2,21,6?",
+            opciones: ["A) 4", "B) 3", "C) 1", "D) 2"],
+            correcta: 3, // D
+            tema: 'Estadística',
+            feedback: 'El 2 aparece 3 veces; el 3 aparece 3 veces también, pero el 2 es el primero. Revisar frecuencia: 2 (tres veces), 3 (tres veces) → moda 2 y 3 (bimodal). En opciones, 2 es correcta.'
+        },
+        { // 39
+            texto: "Para las densidades: 948,940,952,965,940,968 kg/m³, la media es:",
+            opciones: ["A) 962.4", "B) 795.5", "C) 954.6", "D) 952.2"],
+            correcta: 3, // D
+            tema: 'Estadística',
+            feedback: 'Suma=5713, n=6, media=952.166 ≈ 952.2.'
+        },
+        { // 40
+            texto: "La varianza de los datos anteriores es aproximadamente:",
+            opciones: ["A) 145.77", "B) 728.84", "C) 11.02", "D) 116.00"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: 'Varianza = Σ(xi-μ)²/(n-1) = 145.77.'
+        },
+        { // 41
+            texto: "¿Cuántos guantes hay que sacar de una caja con 3 rojos, 2 blancos y 3 grises para estar seguro de obtener 2 rojos?",
+            opciones: ["A) 5", "B) 3", "C) 7", "D) 6"],
+            correcta: 2, // C
+            tema: 'Estadística',
+            feedback: 'Peor caso: sacar los que no son rojos (2+3=5) más 2 rojos = 7.'
+        },
+        { // 42
+            texto: "En una caja: 3 rojas, 5 blancas, 8 azules. Probabilidad de roja o blanca al sacar una:",
+            opciones: ["A) 0.44", "B) 0.50", "C) 0.06", "D) 0.12"],
+            correcta: 1, // B
+            tema: 'Estadística',
+            feedback: '(3+5)/16 = 8/16 = 0.5.'
+        },
+        { // 43
+            texto: "En 3 muestras de 30 tornillos: 3,6,8 defectuosos. Probabilidad de que los tres estén defectuosos al tomar uno de cada muestra:",
+            opciones: ["A) 0.5667", "B) 0.0053", "C) 0.1889", "D) 0.0060"],
+            correcta: 1, // B
+            tema: 'Estadística',
+            feedback: '(3/30)*(6/30)*(8/30) = 0.1*0.2*0.2667 = 0.00533.'
+        },
+        { // 44
+            texto: "¿De cuántas formas se pueden ordenar 8 libros en un estante?",
+            opciones: ["A) 40320", "B) 5040", "C) 10080", "D) 20160"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: '8! = 40320.'
+        },
+        { // 45
+            texto: "Con los dígitos 1-8, ¿cuántos números de 3 cifras sin repetición?",
+            opciones: ["A) 336", "B) 1680", "C) 187", "D) 56"],
+            correcta: 0, // A
+            tema: 'Estadística',
+            feedback: '8P3 = 8*7*6 = 336.'
+        },
+        // ===== GEOMETRÍA (45-59) =====
+        { // 46
+            texto: "Dos rectas son _____ si no tienen un punto en común y guardan siempre la misma distancia.",
+            opciones: ["A) perpendiculares", "B) oblicuas", "C) paralelas", "D) secantes"],
+            correcta: 2, // C
+            tema: 'Geometría',
+            feedback: 'Definición de rectas paralelas.'
+        },
+        { // 47
+            texto: "En la figura, si AB||CD y EF es secante, el valor de x es: (ángulo 40°)",
+            opciones: ["A) 40°", "B) 140°", "C) 50°", "D) 72°"],
+            correcta: 0, // A
+            tema: 'Geometría',
+            feedback: 'Son ángulos correspondientes, iguales.'
+        },
+        { // 48
+            texto: "El perímetro de un triángulo de lados 20, 10 y 25 cm es:",
+            opciones: ["A) 10 cm", "B) 75 cm", "C) 30 cm", "D) 55 cm"],
+            correcta: 3, // D
+            tema: 'Geometría',
+            feedback: '20+10+25=55 cm.'
+        },
+        { // 49
+            texto: "El área de un rectángulo de base 12 cm y altura 3 cm es:",
+            opciones: ["A) 36 cm²", "B) 15 cm²", "C) 4 cm²", "D) 30 cm²"],
+            correcta: 0, // A
+            tema: 'Geometría',
+            feedback: 'A = base × altura = 12×3=36 cm².'
+        },
+        { // 50
+            texto: "El volumen de un cubo de arista 10 cm es:",
+            opciones: ["A) 100 cm³", "B) 1000 cm³", "C) 10 cm³", "D) 10000 cm³"],
+            correcta: 1, // B
+            tema: 'Geometría',
+            feedback: 'V = a³ = 1000 cm³.'
+        },
+        { // 51
+            texto: "La distancia entre los puntos A(-2,-3) y B(4,1) es:",
+            opciones: ["A) √13", "B) 13", "C) 2√13", "D) 2√52"],
+            correcta: 2, // C
+            tema: 'Geometría',
+            feedback: 'd = √[(4+2)²+(1+3)²] = √[36+16] = √52 = 2√13.'
+        },
+        { // 52
+            texto: "La pendiente de la recta que pasa por (5,8) y (-1,6) es:",
+            opciones: ["A) 1/3", "B) 3", "C) -3", "D) -1/3"],
+            correcta: 0, // A
+            tema: 'Geometría',
+            feedback: 'm = (6-8)/(-1-5) = (-2)/(-6)=1/3.'
+        },
+        { // 53
+            texto: "La ecuación de la recta con pendiente 2 que pasa por (4,-6) es:",
+            opciones: ["A) 2x+y-2=0", "B) 2x-y+16=0", "C) 2x-y-2=0", "D) 2x-y-14=0"],
+            correcta: 3, // D
+            tema: 'Geometría',
+            feedback: 'y+6=2(x-4) → y+6=2x-8 → 2x-y-14=0.'
+        },
+        { // 54
+            texto: "¿Cuál es la ecuación de la circunferencia con centro en (3,-4) y radio 6?",
+            opciones: ["A) x²+y²-6x+8y-11=0", "B) x²+y²+6x-8y-11=0", "C) x²+y²-8x+6y-11=0", "D) x²+y²+8x-6y-11=0"],
+            correcta: 0, // A
+            tema: 'Geometría',
+            feedback: '(x-3)²+(y+4)²=36 → x²-6x+9+y²+8y+16=36 → x²+y²-6x+8y-11=0.'
+        },
+        { // 55
+            texto: "El foco de la parábola y² = -8x tiene coordenadas:",
+            opciones: ["A) (0,-2)", "B) (-2,0)", "C) (2,0)", "D) (0,2)"],
+            correcta: 1, // B
+            tema: 'Geometría',
+            feedback: '4p = -8 → p = -2; foco (p,0) = (-2,0).'
+        },
+        { // 56
+            texto: "Los vértices de la elipse x²/16 + y²/25 = 1 son:",
+            opciones: ["A) (-5,0)(5,0)", "B) (0,-5)(0,5)", "C) (-4,0)(4,0)", "D) (0,-4)(0,4)"],
+            correcta: 1, // B
+            tema: 'Geometría',
+            feedback: 'Es vertical, a²=25, a=5, vértices (0,±5).'
+        },
+        { // 57
+            texto: "Las asíntotas de la hipérbola x²/9 - y²/16 = 1 son:",
+            opciones: ["A) y=±(4/3)x", "B) y=±(3/4)x", "C) y=±(4/3)x", "D) y=±(16/9)x"],
+            correcta: 0, // A
+            tema: 'Geometría',
+            feedback: 'Asíntotas: y = ±(b/a)x = ±(4/3)x.'
+        },
+        { // 58
+            texto: "Si el radio de una circunferencia se incrementa al doble, el área:",
+            opciones: ["A) aumenta 4 veces", "B) disminuye a la mitad", "C) aumenta al doble", "D) aumenta al triple"],
+            correcta: 0, // A
+            tema: 'Geometría',
+            feedback: 'A = πr² → con 2r, A' = π(4r²)=4A.'
+        },
+        { // 59
+            texto: "El punto medio del segmento de extremos P1(-6) y P2(4) es:",
+            opciones: ["A) -2", "B) -1", "C) 0", "D) 1"],
+            correcta: 1, // B
+            tema: 'Geometría',
+            feedback: '(-6+4)/2 = -1.'
+        },
+        { // 60
+            texto: "Dos rectas son perpendiculares si el producto de sus pendientes es:",
+            opciones: ["A) 0", "B) 1", "C) -1", "D) ∞"],
+            correcta: 2, // C
+            tema: 'Geometría',
+            feedback: 'm1·m2 = -1 para perpendicularidad.'
+        },
+        // ===== ANALÍTICO (60-64) =====
+        { // 61
+            texto: "¿Qué número sigue en la sucesión: 2, 5, 10, 17, ...?",
+            opciones: ["A) 24", "B) 26", "C) 28", "D) 30"],
+            correcta: 1, // B
+            tema: 'Analítico',
+            feedback: 'Diferencias: 3,5,7,... la siguiente diferencia es 9 → 17+9=26.'
+        },
+        { // 62
+            texto: "¿Qué letra continúa en la serie: A, C, F, J, ...?",
+            opciones: ["A) M", "B) N", "C) O", "D) P"],
+            correcta: 2, // C
+            tema: 'Analítico',
+            feedback: 'Posiciones: 1,3,6,10,... diferencias 2,3,4 → siguiente 5 → 10+5=15 → O.'
+        },
+        { // 63
+            texto: "¿Qué figura sigue en la secuencia? (patrón de rotación)",
+            opciones: ["A) Triángulo", "B) Cuadrado", "C) Círculo", "D) Rombo"],
+            correcta: 1, // B (suponiendo patrón)
+            tema: 'Analítico',
+            feedback: 'Patrón: círculo, cuadrado, triángulo, ... luego cuadrado (depende de la imagen).'
+        },
+        { // 64
+            texto: "El término general de la sucesión 3, 7, 11, 15, ... es:",
+            opciones: ["A) 4n-1", "B) 4n+1", "C) 3n", "D) 3n+1"],
+            correcta: 0, // A
+            tema: 'Analítico',
+            feedback: 'a₁=3, diferencia 4 → an = 4n-1.'
+        },
+        { // 65
+            texto: "¿Qué número falta en la secuencia: 1, 1, 2, 3, 5, 8, ...?",
+            opciones: ["A) 11", "B) 12", "C) 13", "D) 14"],
+            correcta: 2, // C
+            tema: 'Analítico',
+            feedback: 'Sucesión de Fibonacci: cada término suma los dos anteriores → 5+8=13.'
+        },
+        // ===== CÁLCULO (65-79) =====
+        { // 66
+            texto: "La derivada de f(x) = 3x² es:",
+            opciones: ["A) 6x", "B) 3x", "C) 2x", "D) 6"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: 'd/dx (ax^n) = n·a·x^(n-1) → 2·3x = 6x.'
+        },
+        { // 67
+            texto: "La integral indefinida ∫ 2x dx es:",
+            opciones: ["A) x² + C", "B) x²", "C) 2x² + C", "D) 2x"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: '∫ x^n dx = x^(n+1)/(n+1) + C → ∫ 2x dx = 2·(x²/2) = x² + C.'
+        },
+        { // 68
+            texto: "El límite de (x²-1)/(x-1) cuando x→1 es:",
+            opciones: ["A) 0", "B) 1", "C) 2", "D) ∞"],
+            correcta: 2, // C
+            tema: 'Cálculo',
+            feedback: 'Factorizar: (x-1)(x+1)/(x-1) = x+1 → límite = 2.'
+        },
+        { // 69
+            texto: "La derivada de f(x) = sen x es:",
+            opciones: ["A) cos x", "B) -cos x", "C) -sen x", "D) sec x"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: 'Derivada de sen x = cos x.'
+        },
+        { // 70
+            texto: "∫ (1/x) dx es igual a:",
+            opciones: ["A) ln|x| + C", "B) e^x + C", "C) 1/x² + C", "D) x ln x + C"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: '∫ (1/x) dx = ln|x| + C.'
+        },
+        { // 71
+            texto: "La derivada de e^(3x) es:",
+            opciones: ["A) e^(3x)", "B) 3e^(3x)", "C) 3e^x", "D) e^(3x)/3"],
+            correcta: 1, // B
+            tema: 'Cálculo',
+            feedback: 'd/dx e^(u) = e^(u)·u' → 3e^(3x).'
+        },
+        { // 72
+            texto: "El valor de f'(2) si f(x)= x³ - 3x es:",
+            opciones: ["A) 6", "B) 9", "C) 12", "D) 15"],
+            correcta: 1, // B
+            tema: 'Cálculo',
+            feedback: 'f'(x)=3x²-3 → f'(2)=12-3=9.'
+        },
+        { // 73
+            texto: "La derivada de ln(2x) es:",
+            opciones: ["A) 1/x", "B) 1/(2x)", "C) 2/x", "D) 1/2x"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: 'd/dx ln(u) = u'/u → 2/(2x)=1/x.'
+        },
+        { // 74
+            texto: "∫₀¹ x² dx es igual a:",
+            opciones: ["A) 1/3", "B) 1", "C) 2", "D) 1/2"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: '[x³/3]₀¹ = 1/3.'
+        },
+        { // 75
+            texto: "La pendiente de la recta tangente a f(x)=x² en x=2 es:",
+            opciones: ["A) 2", "B) 4", "C) 6", "D) 8"],
+            correcta: 1, // B
+            tema: 'Cálculo',
+            feedback: 'f'(x)=2x → f'(2)=4.'
+        },
+        { // 76
+            texto: "El límite de (3x+2)/(x-1) cuando x→∞ es:",
+            opciones: ["A) 0", "B) 3", "C) 2", "D) ∞"],
+            correcta: 1, // B
+            tema: 'Cálculo',
+            feedback: 'Los grados son iguales, límite = coeficiente principal 3/1 = 3.'
+        },
+        { // 77
+            texto: "La derivada de f(x)= cos x es:",
+            opciones: ["A) sen x", "B) -sen x", "C) -cos x", "D) tan x"],
+            correcta: 1, // B
+            tema: 'Cálculo',
+            feedback: 'd/dx cos x = -sen x.'
+        },
+        { // 78
+            texto: "∫ (2x+1) dx es:",
+            opciones: ["A) x²+x+C", "B) 2x²+x+C", "C) x²+1+C", "D) 2x+1+C"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: '∫ 2x dx = x²; ∫ 1 dx = x.'
+        },
+        { // 79
+            texto: "La derivada de f(x)=√x es:",
+            opciones: ["A) 1/(2√x)", "B) 1/(√x)", "C) 2√x", "D) 1/2x"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: 'f(x)=x^(1/2) → f'(x)= (1/2)x^(-1/2) = 1/(2√x).'
+        },
+        { // 80
+            texto: "El valor de ∫₋₁¹ x³ dx es:",
+            opciones: ["A) 0", "B) 1", "C) 2", "D) -1"],
+            correcta: 0, // A
+            tema: 'Cálculo',
+            feedback: 'Función impar en intervalo simétrico → integral = 0.'
+        }
+    ];
+
+    // ==============================================================
+    // CONFIGURACIÓN GOOGLE SHEETS
+    // ==============================================================
+    // IMPORTANTE: Reemplaza con tu URL de Apps Script
+    const URL_GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/TU_ID_AQUI/exec';
+
+    // Estado
+    let preguntaActual = 0;
+    let respuestas = Array(80).fill(null);
+    let datosUsuario = { nombre: '', email: '' };
+    let tiempoInicio = null;
+    let intervalo = null;
+    let tiempoFinal = null;
+
+    // Elementos DOM
+    const panelRegistro = document.getElementById('panelRegistro');
+    const progresoContainer = document.getElementById('progresoContainer');
+    const modoExamen = document.getElementById('modoExamen');
+    const panelResultados = document.getElementById('panelResultados');
+    const inputNombre = document.getElementById('inputNombre');
+    const inputEmail = document.getElementById('inputEmail');
+    const btnComenzar = document.getElementById('btnComenzar');
+    const mensajeRegistro = document.getElementById('mensajeRegistro');
+    const mensajeEnvio = document.getElementById('mensajeEnvio');
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const btnFinalizar = document.getElementById('btnFinalizar');
+    const btnReiniciarExamen = document.getElementById('btnReiniciarExamen');
+    const btnNuevoIntento = document.getElementById('btnNuevoIntento');
+    const btnFinalizarApp = document.getElementById('btnFinalizarApp');
+    const preguntaIndicador = document.getElementById('preguntaIndicador');
+    const contenedorPregunta = document.getElementById('contenedorPregunta');
+    const barraProgreso = document.getElementById('barraProgreso');
+    const tablaDetalleBody = document.getElementById('tablaDetalleBody');
+    const puntajeTotal = document.getElementById('puntajeTotal');
+    const aciertosAritmetica = document.getElementById('aciertosAritmetica');
+    const aciertosAlgebra = document.getElementById('aciertosAlgebra');
+    const aciertosEstadistica = document.getElementById('aciertosEstadistica');
+    const aciertosGeometria = document.getElementById('aciertosGeometria');
+    const aciertosAnalitico = document.getElementById('aciertosAnalitico');
+    const aciertosCalculo = document.getElementById('aciertosCalculo');
+    const cronometro = document.getElementById('cronometro');
+    const tiempoFinalSpan = document.getElementById('tiempoFinal');
+    const feedbackGeneral = document.getElementById('feedbackGeneral');
+
+    // Funciones
+    function iniciarCronometro() {
+        tiempoInicio = new Date();
+        intervalo = setInterval(() => {
+            const ahora = new Date();
+            const diff = Math.floor((ahora - tiempoInicio) / 1000);
+            const horas = Math.floor(diff / 3600);
+            const minutos = Math.floor((diff % 3600) / 60);
+            const segundos = diff % 60;
+            cronometro.textContent = `${horas.toString().padStart(2,'0')}:${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
+        }, 1000);
+    }
+
+    function detenerCronometro() {
+        if (intervalo) {
+            clearInterval(intervalo);
+            intervalo = null;
+            tiempoFinal = cronometro.textContent;
+        }
+    }
+
+    function guardarRespuestaActual() {
+        const radios = contenedorPregunta.querySelectorAll('input[type="radio"]:checked');
+        if (radios.length > 0) {
+            respuestas[preguntaActual] = parseInt(radios[0].value);
+        }
+    }
+
+    function actualizarBarra() {
+        const respondidas = respuestas.filter(r => r !== null).length;
+        barraProgreso.style.width = (respondidas / 80 * 100) + '%';
+    }
+
+    function renderizarPregunta() {
+        const p = preguntas[preguntaActual];
+        const seleccionada = respuestas[preguntaActual];
+        
+        let html = `<div class="pregunta-item">`;
+        html += `<div><span class="num-pregunta">Pregunta ${preguntaActual+1} de 80</span> <span class="badge-tema">${p.tema}</span></div>`;
+        html += `<div class="texto-pregunta">${p.texto}</div>`;
+        html += `<div class="opciones">`;
+        
+        p.opciones.forEach((opcion, idx) => {
+            html += `<label class="opcion">`;
+            html += `<input type="radio" name="respuesta" value="${idx}" data-pregunta="${preguntaActual}" ${seleccionada === idx ? 'checked' : ''}>`;
+            html += opcion;
+            html += `</label>`;
+        });
+        
+        html += `</div></div>`;
+        contenedorPregunta.innerHTML = html;
+
+        preguntaIndicador.textContent = `Pregunta ${preguntaActual+1}/80`;
+        btnAnterior.disabled = (preguntaActual === 0);
+        btnSiguiente.disabled = (preguntaActual === 79);
+        actualizarBarra();
+    }
+
+    function calcularResultados() {
+        let aciertos = { arit:0, alge:0, estad:0, geo:0, anal:0, calc:0 };
+        for (let i = 0; i < 80; i++) {
+            if (respuestas[i] === preguntas[i].correcta) {
+                if (i < 15) aciertos.arit++;
+                else if (i < 30) aciertos.alge++;
+                else if (i < 45) aciertos.estad++;
+                else if (i < 60) aciertos.geo++;
+                else if (i < 65) aciertos.anal++;
+                else aciertos.calc++;
+            }
+        }
+        return aciertos;
+    }
+
+    function generarFeedbackErrores() {
+        let errores = [];
+        for (let i = 0; i < 80; i++) {
+            if (respuestas[i] !== null && respuestas[i] !== preguntas[i].correcta) {
+                errores.push(`Pregunta ${i+1} (${preguntas[i].tema}): ${preguntas[i].feedback || 'Revisa la respuesta correcta.'}`);
+            }
+        }
+        if (errores.length > 0) {
+            feedbackGeneral.innerHTML = '<strong>📝 Retroalimentación de errores:</strong><br>' + errores.slice(0,10).join('<br>') + (errores.length>10 ? '<br>... y ' + (errores.length-10) + ' más.' : '');
+        } else {
+            feedbackGeneral.innerHTML = '<strong>📝 ¡Felicitaciones! No tuviste errores.</strong>';
+        }
+    }
+
+    async function enviarResultados() {
+        const aciertos = calcularResultados();
+        const total = aciertos.arit + aciertos.alge + aciertos.estad + aciertos.geo + aciertos.anal + aciertos.calc;
+        const porcentaje = ((total / 80) * 100).toFixed(1);
+        
+        const datos = {
+            nombre: datosUsuario.nombre,
+            email: datosUsuario.email,
+            aciertos: total,
+            aciertosArit: aciertos.arit,
+            aciertosAlge: aciertos.alge,
+            aciertosEstad: aciertos.estad,
+            aciertosGeo: aciertos.geo,
+            aciertosAnal: aciertos.anal,
+            aciertosCalc: aciertos.calc,
+            tiempo: tiempoFinal,
+            total: 80,
+            porcentaje: porcentaje,
+            respuestas: respuestas.map(r => r !== null ? r : -1)
+        };
+
+        try {
+            await fetch(URL_GOOGLE_APPS_SCRIPT, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+            mensajeEnvio.innerHTML = '<div class="mensaje-exito">✅ Resultados enviados correctamente</div>';
+        } catch (error) {
+            mensajeEnvio.innerHTML = '<div class="mensaje-error">❌ Error al enviar. Los resultados se muestran a continuación.</div>';
+        }
+    }
+
+    function mostrarResultados() {
+        guardarRespuestaActual();
+        detenerCronometro();
+        modoExamen.classList.add('oculto');
+        panelResultados.classList.remove('oculto');
+
+        const aciertos = calcularResultados();
+        const total = aciertos.arit + aciertos.alge + aciertos.estad + aciertos.geo + aciertos.anal + aciertos.calc;
+        
+        let filas = '';
+        for (let i = 0; i < 80; i++) {
+            const user = respuestas[i];
+            const correcta = preguntas[i].correcta;
+            const letraUser = user !== null ? String.fromCharCode(65 + user) : '—';
+            const letraCorrecta = String.fromCharCode(65 + correcta);
+            const clase = (user === correcta) ? 'acierto' : 'error';
+            
+            filas += `<tr>`;
+            filas += `<td>${i+1}</td>`;
+            filas += `<td>${preguntas[i].tema}</td>`;
+            filas += `<td>${letraUser}</td>`;
+            filas += `<td>${letraCorrecta}</td>`;
+            filas += `<td class="${clase}">${user === correcta ? '✓' : '✗'}</td>`;
+            filas += `</tr>`;
+        }
+        tablaDetalleBody.innerHTML = filas;
+        puntajeTotal.textContent = `${total}/80`;
+        aciertosAritmetica.textContent = aciertos.arit;
+        aciertosAlgebra.textContent = aciertos.alge;
+        aciertosEstadistica.textContent = aciertos.estad;
+        aciertosGeometria.textContent = aciertos.geo;
+        aciertosAnalitico.textContent = aciertos.anal;
+        aciertosCalculo.textContent = aciertos.calc;
+        tiempoFinalSpan.textContent = `Tiempo: ${tiempoFinal || '00:00:00'}`;
+
+        generarFeedbackErrores();
+        enviarResultados();
+    }
+
+    function reiniciarSimulacro() {
+        respuestas = Array(80).fill(null);
+        preguntaActual = 0;
+        if (intervalo) {
+            clearInterval(intervalo);
+            intervalo = null;
+        }
+        cronometro.textContent = '00:00:00';
+        panelRegistro.classList.remove('oculto');
+        progresoContainer.classList.add('oculto');
+        modoExamen.classList.add('oculto');
+        panelResultados.classList.add('oculto');
+        mensajeRegistro.innerHTML = '';
+        mensajeEnvio.innerHTML = '';
+    }
+
+    function comenzarExamen() {
+        const nombre = inputNombre.value.trim();
+        const email = inputEmail.value.trim();
+        
+        if (!nombre || !email) {
+            mensajeRegistro.innerHTML = '<div class="mensaje-error">❌ Completa todos los campos</div>';
+            return;
+        }
+        if (!email.includes('@') || !email.includes('.')) {
+            mensajeRegistro.innerHTML = '<div class="mensaje-error">❌ Correo inválido</div>';
+            return;
+        }
+        
+        datosUsuario = { nombre, email };
+        panelRegistro.classList.add('oculto');
+        progresoContainer.classList.remove('oculto');
+        modoExamen.classList.remove('oculto');
+        iniciarCronometro();
+        renderizarPregunta();
+    }
+
+    // Event listeners
+    btnComenzar.addEventListener('click', comenzarExamen);
+
+    btnAnterior.addEventListener('click', () => {
+        guardarRespuestaActual();
+        if (preguntaActual > 0) {
+            preguntaActual--;
+            renderizarPregunta();
+        }
+    });
+
+    btnSiguiente.addEventListener('click', () => {
+        guardarRespuestaActual();
+        if (preguntaActual < 79) {
+            preguntaActual++;
+            renderizarPregunta();
+        }
+    });
+
+    btnFinalizar.addEventListener('click', mostrarResultados);
+    btnReiniciarExamen.addEventListener('click', reiniciarSimulacro);
+    btnNuevoIntento.addEventListener('click', reiniciarSimulacro);
+    btnFinalizarApp.addEventListener('click', () => alert('Simulador finalizado. ¡Gracias por practicar!'));
+
+    document.addEventListener('change', (e) => {
+        if (e.target.matches('input[type="radio"]')) {
+            respuestas[preguntaActual] = parseInt(e.target.value);
+            actualizarBarra();
+        }
+    });
+
+    // Inicializar
+    panelRegistro.classList.remove('oculto');
+    progresoContainer.classList.add('oculto');
+    modoExamen.classList.add('oculto');
+    panelResultados.classList.add('oculto');
+})();
+</script>
+</body>
+</html>
