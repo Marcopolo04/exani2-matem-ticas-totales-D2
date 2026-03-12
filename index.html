@@ -487,7 +487,7 @@
     // Esperar a que el DOM esté completamente cargado
     document.addEventListener('DOMContentLoaded', function() {
         // ==============================================================
-        // 80 PREGUNTAS DE PENSAMIENTO MATEMÁTICO
+        // 80 PREGUNTAS DE PENSAMIENTO MATEMÁTICO (CORREGIDAS)
         // Distribución: 15 Aritmética, 15 Álgebra, 15 Estadística, 15 Geometría, 5 Analítico, 15 Cálculo
         // ==============================================================
         const preguntas = [
@@ -495,105 +495,105 @@
             { // 1
                 texto: "El resultado de 9 - 10 - 4 + 5 - 2 + 6 - 7 - 2 es:",
                 opciones: ["A) -5", "B) 5", "C) -7", "D) 7"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Aritmética',
                 feedback: 'Operación: 9-10=-1; -1-4=-5; -5+5=0; 0-2=-2; -2+6=4; 4-7=-3; -3-2=-5.'
             },
             { // 2
                 texto: "Al simplificar la expresión -5 + 4{3 - (2 - 5)} se obtiene:",
                 opciones: ["A) 19", "B) 20", "C) 21", "D) 22"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Aritmética',
                 feedback: 'Primero el paréntesis: 2-5=-3. Luego 3-(-3)=6. Luego 4*6=24. Finalmente -5+24=19.'
             },
             { // 3
                 texto: "¿Cuál es el resultado de convertir 0.12 en fracción común?",
                 opciones: ["A) 3/25", "B) 12/100", "C) 12/33", "D) 4/33"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Aritmética',
                 feedback: '0.12 periódico: (12-0)/(100-1)=12/99=4/33.'
             },
             { // 4
                 texto: "El resultado de 2.0098 + 0.37 + 105.4056 es:",
                 opciones: ["A) 105.7054", "B) 185.15254", "C) 107.7854", "D) 127.7854"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Aritmética',
                 feedback: 'Suma vertical: 2.0098+0.37=2.3798; +105.4056=107.7854.'
             },
             { // 5
                 texto: "El resultado de la operación 0.024(15.3) - 0.1823 es:",
                 opciones: ["A) 0.5495", "B) 0.1849", "C) 0.3672", "D) 0.3276"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Aritmética',
                 feedback: '0.024*15.3=0.3672; 0.3672-0.1823=0.1849.'
             },
             { // 6
                 texto: "¿A qué es igual 0.000023?",
                 opciones: ["A) 23×10⁻⁵", "B) 0.23×10⁻⁵", "C) 2.3×10⁻⁵", "D) 0.023×10⁻⁵"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Aritmética',
                 feedback: '0.000023 = 2.3×10⁻⁵ (desplazar decimal 5 lugares a la derecha).'
             },
             { // 7
                 texto: "Una máquina embotelladora llena 350 botellas en 25 minutos. ¿Cuántas botellas llenará en una hora y media?",
                 opciones: ["A) 2735", "B) 2210", "C) 1381", "D) 1260"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Aritmética',
                 feedback: 'Regla de tres directa: 350/25 = x/90 → x=350*90/25=1260.'
             },
             { // 8
                 texto: "Ocho hombres construyen una barda en 15 días. ¿En cuántos días la construirán 20 hombres?",
                 opciones: ["A) 3", "B) 5", "C) 6", "D) 8"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Aritmética',
                 feedback: 'Inversa: 8*15 = 20*x → x=120/20=6 días.'
             },
             { // 9
                 texto: "¿Cuál es el 75% de 2500?",
                 opciones: ["A) 1875", "B) 1750", "C) 2000", "D) 1625"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Aritmética',
                 feedback: '2500*0.75 = 1875.'
             },
             { // 10
                 texto: "Si al precio de un producto de $600 se le aplica un descuento del 15%, ¿cuánto se paga?",
                 opciones: ["A) $90", "B) $510", "C) $440.20", "D) $368.50"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Aritmética',
                 feedback: 'Descuento 15% = 600*0.15=90; paga 600-90=510.'
             },
             { // 11
                 texto: "La fracción 3/4 en porcentaje equivale a:",
                 opciones: ["A) 75%", "B) 70%", "C) 60%", "D) 55%"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Aritmética',
                 feedback: '3/4 = 0.75 = 75%.'
             },
             { // 12
                 texto: "Un auto tarda 8 horas en recorrer una distancia a 100 km/h. ¿Cuánto tardará a 120 km/h?",
                 opciones: ["A) 6h 5min", "B) 6h 40min", "C) 7h", "D) 6h 20min"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Aritmética',
                 feedback: 'Distancia=800 km; tiempo=800/120=6.6667 h = 6h 40min.'
             },
             { // 13
                 texto: "Las dimensiones de un terreno están a razón de 3/4. Si el perímetro es 1500 m, ¿cuál es el área?",
                 opciones: ["A) 137755 m²", "B) 140000 m²", "C) 125000 m²", "D) 150000 m²"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Aritmética',
                 feedback: 'Largo=x, ancho=3x/4; perímetro 2(x+3x/4)=1500 → x≈428.57, área≈428.57*321.43≈137755.'
             },
             { // 14
                 texto: "¿Qué capital se debe invertir para lograr un interés de $25000 a una tasa de 20% anual durante 180 días?",
                 opciones: ["A) 180000", "B) 200000", "C) 250000", "D) 300000"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Aritmética',
                 feedback: 'I = C*i*t → 25000 = C*0.2*(180/360) → C=25000/(0.2*0.5)=25000/0.1=250000.'
             },
             { // 15
                 texto: "¿A qué tasa de interés simple anual se triplica un capital en 5 años?",
                 opciones: ["A) 40%", "B) 25%", "C) 60%", "D) 45%"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Aritmética',
                 feedback: 'M = C(1+it) → 3C = C(1+5i) → 3=1+5i → i=0.4=40%.'
             },
@@ -601,105 +601,105 @@
             { // 16
                 texto: "El resultado de (2³)² es equivalente a:",
                 opciones: ["A) 2³+2³", "B) (2³)(2³)", "C) 2×3×2", "D) (2×3)(2×3)"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Álgebra',
                 feedback: '(2³)² = 2⁶ = 2³·2³.'
             },
             { // 17
                 texto: "Al simplificar √48 se obtiene:",
                 opciones: ["A) 24", "B) 4√3", "C) √3", "D) 12"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Álgebra',
                 feedback: '√48 = √(16·3) = 4√3.'
             },
             { // 18
                 texto: "El resultado de (3x² - 6x + 4) + (-4x² + 8x - 6) es:",
                 opciones: ["A) -x²+2x-2", "B) x²+2x-2", "C) -x²+2x+2", "D) x²-2x-2"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Álgebra',
                 feedback: 'Suma: 3x²-4x² = -x²; -6x+8x=2x; 4-6=-2.'
             },
             { // 19
                 texto: "El resultado de (5x - 3y)(2x - 3y) es:",
                 opciones: ["A) 10x²-21xy+9y²", "B) 10x²+21xy+9y²", "C) 10x²-21xy-9y²", "D) -10x²-21xy+9y²"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Álgebra',
                 feedback: '5x*2x=10x²; 5x*(-3y)=-15xy; -3y*2x=-6xy; -3y*(-3y)=9y²; suma xy: -21xy.'
             },
             { // 20
                 texto: "El cociente de (8x³ + y³) entre (2x + y) es:",
                 opciones: ["A) 4x²+y²", "B) 4x²+2xy+y²", "C) 4x²-2xy+y²", "D) 4x²-y²"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Álgebra',
                 feedback: 'División de polinomios: 8x³+y³ = (2x+y)(4x²-2xy+y²).'
             },
             { // 21
                 texto: "El resultado de (2xy² - 1)² es:",
                 opciones: ["A) 4x²y⁴-1", "B) 4x²y⁴+1", "C) 4x²y⁴-4xy²+1", "D) 4x²y⁴+4xy²+1"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Álgebra',
                 feedback: '(a-b)² = a²-2ab+b² → 4x²y⁴-4xy²+1.'
             },
             { // 22
                 texto: "Al desarrollar (x - 8y)(x + 8y) se obtiene:",
                 opciones: ["A) x²-16y²", "B) x²+16y²", "C) x²-64y²", "D) x²+64y²"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Álgebra',
                 feedback: 'Binomios conjugados: (x)² - (8y)² = x²-64y².'
             },
             { // 23
                 texto: "La factorización de 3x⁴ - 5x³ - 2x² es:",
                 opciones: ["A) x(3x²-5x-2)", "B) x²(3x²-5x-2)", "C) x²(3x³-5x²-2x)", "D) x(3x³-5x²-2)"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Álgebra',
                 feedback: 'Factor común x²: x²(3x²-5x-2).'
             },
             { // 24
                 texto: "Al factorizar 9x² - 16 se obtiene:",
                 opciones: ["A) (3x-4)²", "B) (3x-4)(3x+4)", "C) (3x-4)(3x-4)", "D) (3x+4)(3x+4)"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Álgebra',
                 feedback: 'Diferencia de cuadrados: (3x)² - 4² = (3x-4)(3x+4).'
             },
             { // 25
                 texto: "La factorización de x² - 7x + 12 es:",
                 opciones: ["A) (x-4)(x-3)", "B) (x+4)(x+3)", "C) (x+4)(x-3)", "D) (x-4)(x+3)"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Álgebra',
                 feedback: 'Dos números que multiplicados den 12 y sumados -7: -4 y -3.'
             },
             { // 26
                 texto: "El valor de x en 5x + 7 = 12 es:",
                 opciones: ["A) 0", "B) 1", "C) 2", "D) 3"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Álgebra',
                 feedback: '5x = 12-7=5 → x=1.'
             },
             { // 27
                 texto: "La suma de tres números enteros consecutivos es 60. La expresión que permite calcularlos es:",
                 opciones: ["A) x=60", "B) 60x=3", "C) 3x=60", "D) 3x+3=60"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Álgebra',
                 feedback: 'x + (x+1) + (x+2) = 3x+3 = 60.'
             },
             { // 28
                 texto: "Las raíces de x² - 5x + 6 = 0 son:",
                 opciones: ["A) 3 y 2", "B) -3 y -2", "C) 3 y -2", "D) -3 y 2"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Álgebra',
                 feedback: '(x-3)(x-2)=0 → x=3,2.'
             },
             { // 29
                 texto: "Los valores que satisfacen x² + 5x = 0 son:",
                 opciones: ["A) 25 y 5", "B) 5 y -1", "C) 0 y 5", "D) 0 y -5"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Álgebra',
                 feedback: 'x(x+5)=0 → x=0, x=-5.'
             },
             { // 30
                 texto: "El valor de x en 3^(x+1) = 9 es:",
                 opciones: ["A) 2", "B) -1", "C) -2", "D) 1"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Álgebra',
                 feedback: '3^(x+1) = 3² → x+1=2 → x=1.'
             },
@@ -707,105 +707,105 @@
             { // 31
                 texto: "Completa: Una _____ es un ejemplo de población, mientras que una _____ es ejemplo de _____.",
                 opciones: ["A) ciudad, colonia, muestra", "B) entidad, nación, muestra", "C) familia, hija, variable", "D) nación, entidad, estadística"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: 'La población es el conjunto total (ciudad), la muestra es un subconjunto (colonia).'
             },
             { // 32
                 texto: "¿Cuál es una variable continua?",
                 opciones: ["A) Número de huevos en un paquete", "B) Granos de arena en un vaso", "C) Temperatura en un reactor", "D) Talla de calzado"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Estadística',
                 feedback: 'La temperatura puede tomar cualquier valor real, es continua.'
             },
             { // 33
                 texto: "¿A qué clases pertenecen los datos 3.8 y 5.8 en la tabla: [2.8-3.8) f=5, [3.8-4.8) f=12, [4.8-5.8) f=9, [5.8-6.8) f=6?",
                 opciones: ["A) 1 y 3", "B) 2 y 3", "C) 2 y 4", "D) 1 y 4"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Estadística',
                 feedback: '3.8 pertenece a la clase 2 (intervalo cerrado-izquierda), 5.8 a la clase 3.'
             },
             { // 34
                 texto: "El rango de los datos en la tabla anterior es:",
                 opciones: ["A) 4", "B) 1", "C) 12", "D) 19"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: 'Rango = 6.8 - 2.8 = 4.'
             },
             { // 35
                 texto: "¿Cuál es una medida de tendencia central?",
                 opciones: ["A) Rango", "B) Mediana", "C) Cuartil", "D) Varianza"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Estadística',
                 feedback: 'La mediana es una medida de tendencia central.'
             },
             { // 36
                 texto: "¿Cuál es el promedio de los datos: 34,36,34,38,40,34,32?",
                 opciones: ["A) 35.4", "B) 35.1", "C) 36.2", "D) 38.1"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: 'Suma=248, n=7, promedio=35.428 ≈ 35.4.'
             },
             { // 37
                 texto: "Para los mismos datos, ¿cuál es la mediana?",
                 opciones: ["A) 34", "B) 36", "C) 35", "D) 34.5"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: 'Ordenados: 32,34,34,34,36,38,40 → mediana=34.'
             },
             { // 38
                 texto: "¿Cuál es la moda de: 4,2,3,8,12,10,1,14,3,3,2,4,15,2,21,6?",
                 opciones: ["A) 4", "B) 3", "C) 1", "D) 2"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Estadística',
                 feedback: 'El 2 aparece 3 veces; el 3 aparece 3 veces también, pero el 2 es el primero. Revisar frecuencia: 2 (tres veces), 3 (tres veces) → moda 2 y 3 (bimodal). En opciones, 2 es correcta.'
             },
             { // 39
                 texto: "Para las densidades: 948,940,952,965,940,968 kg/m³, la media es:",
                 opciones: ["A) 962.4", "B) 795.5", "C) 954.6", "D) 952.2"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Estadística',
                 feedback: 'Suma=5713, n=6, media=952.166 ≈ 952.2.'
             },
             { // 40
                 texto: "La varianza de los datos anteriores es aproximadamente:",
                 opciones: ["A) 145.77", "B) 728.84", "C) 11.02", "D) 116.00"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: 'Varianza = Σ(xi-μ)²/(n-1) = 145.77.'
             },
             { // 41
                 texto: "¿Cuántos guantes hay que sacar de una caja con 3 rojos, 2 blancos y 3 grises para estar seguro de obtener 2 rojos?",
                 opciones: ["A) 5", "B) 3", "C) 7", "D) 6"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Estadística',
                 feedback: 'Peor caso: sacar los que no son rojos (2+3=5) más 2 rojos = 7.'
             },
             { // 42
                 texto: "En una caja: 3 rojas, 5 blancas, 8 azules. Probabilidad de roja o blanca al sacar una:",
                 opciones: ["A) 0.44", "B) 0.50", "C) 0.06", "D) 0.12"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Estadística',
                 feedback: '(3+5)/16 = 8/16 = 0.5.'
             },
             { // 43
                 texto: "En 3 muestras de 30 tornillos: 3,6,8 defectuosos. Probabilidad de que los tres estén defectuosos al tomar uno de cada muestra:",
                 opciones: ["A) 0.5667", "B) 0.0053", "C) 0.1889", "D) 0.0060"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Estadística',
                 feedback: '(3/30)*(6/30)*(8/30) = 0.1*0.2*0.2667 = 0.00533.'
             },
             { // 44
                 texto: "¿De cuántas formas se pueden ordenar 8 libros en un estante?",
                 opciones: ["A) 40320", "B) 5040", "C) 10080", "D) 20160"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: '8! = 40320.'
             },
             { // 45
                 texto: "Con los dígitos 1-8, ¿cuántos números de 3 cifras sin repetición?",
                 opciones: ["A) 336", "B) 1680", "C) 187", "D) 56"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Estadística',
                 feedback: '8P3 = 8*7*6 = 336.'
             },
@@ -813,105 +813,105 @@
             { // 46
                 texto: "Dos rectas son _____ si no tienen un punto en común y guardan siempre la misma distancia.",
                 opciones: ["A) perpendiculares", "B) oblicuas", "C) paralelas", "D) secantes"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Geometría',
                 feedback: 'Definición de rectas paralelas.'
             },
             { // 47
                 texto: "En la figura, si AB||CD y EF es secante, el valor de x es: (ángulo 40°)",
                 opciones: ["A) 40°", "B) 140°", "C) 50°", "D) 72°"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Geometría',
                 feedback: 'Son ángulos correspondientes, iguales.'
             },
             { // 48
                 texto: "El perímetro de un triángulo de lados 20, 10 y 25 cm es:",
                 opciones: ["A) 10 cm", "B) 75 cm", "C) 30 cm", "D) 55 cm"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Geometría',
                 feedback: '20+10+25=55 cm.'
             },
             { // 49
                 texto: "El área de un rectángulo de base 12 cm y altura 3 cm es:",
                 opciones: ["A) 36 cm²", "B) 15 cm²", "C) 4 cm²", "D) 30 cm²"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Geometría',
                 feedback: 'A = base × altura = 12×3=36 cm².'
             },
             { // 50
                 texto: "El volumen de un cubo de arista 10 cm es:",
                 opciones: ["A) 100 cm³", "B) 1000 cm³", "C) 10 cm³", "D) 10000 cm³"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Geometría',
                 feedback: 'V = a³ = 1000 cm³.'
             },
             { // 51
                 texto: "La distancia entre los puntos A(-2,-3) y B(4,1) es:",
                 opciones: ["A) √13", "B) 13", "C) 2√13", "D) 2√52"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Geometría',
                 feedback: 'd = √[(4+2)²+(1+3)²] = √[36+16] = √52 = 2√13.'
             },
             { // 52
                 texto: "La pendiente de la recta que pasa por (5,8) y (-1,6) es:",
                 opciones: ["A) 1/3", "B) 3", "C) -3", "D) -1/3"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Geometría',
                 feedback: 'm = (6-8)/(-1-5) = (-2)/(-6)=1/3.'
             },
             { // 53
                 texto: "La ecuación de la recta con pendiente 2 que pasa por (4,-6) es:",
                 opciones: ["A) 2x+y-2=0", "B) 2x-y+16=0", "C) 2x-y-2=0", "D) 2x-y-14=0"],
-                correcta: 3, // D
+                correcta: 3,
                 tema: 'Geometría',
                 feedback: 'y+6=2(x-4) → y+6=2x-8 → 2x-y-14=0.'
             },
             { // 54
                 texto: "¿Cuál es la ecuación de la circunferencia con centro en (3,-4) y radio 6?",
                 opciones: ["A) x²+y²-6x+8y-11=0", "B) x²+y²+6x-8y-11=0", "C) x²+y²-8x+6y-11=0", "D) x²+y²+8x-6y-11=0"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Geometría',
                 feedback: '(x-3)²+(y+4)²=36 → x²-6x+9+y²+8y+16=36 → x²+y²-6x+8y-11=0.'
             },
             { // 55
                 texto: "El foco de la parábola y² = -8x tiene coordenadas:",
                 opciones: ["A) (0,-2)", "B) (-2,0)", "C) (2,0)", "D) (0,2)"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Geometría',
                 feedback: '4p = -8 → p = -2; foco (p,0) = (-2,0).'
             },
             { // 56
                 texto: "Los vértices de la elipse x²/16 + y²/25 = 1 son:",
                 opciones: ["A) (-5,0)(5,0)", "B) (0,-5)(0,5)", "C) (-4,0)(4,0)", "D) (0,-4)(0,4)"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Geometría',
                 feedback: 'Es vertical, a²=25, a=5, vértices (0,±5).'
             },
             { // 57
                 texto: "Las asíntotas de la hipérbola x²/9 - y²/16 = 1 son:",
                 opciones: ["A) y=±(4/3)x", "B) y=±(3/4)x", "C) y=±(4/3)x", "D) y=±(16/9)x"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Geometría',
                 feedback: 'Asíntotas: y = ±(b/a)x = ±(4/3)x.'
             },
             { // 58
                 texto: "Si el radio de una circunferencia se incrementa al doble, el área:",
                 opciones: ["A) aumenta 4 veces", "B) disminuye a la mitad", "C) aumenta al doble", "D) aumenta al triple"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Geometría',
-                feedback: 'A = πr² → con 2r, A' = π(4r²)=4A.'
+                feedback: "A = πr² → con 2r, A' = π(4r²)=4A."  // CORREGIDO: usando comillas dobles para evitar conflicto
             },
             { // 59
                 texto: "El punto medio del segmento de extremos P1(-6) y P2(4) es:",
                 opciones: ["A) -2", "B) -1", "C) 0", "D) 1"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Geometría',
                 feedback: '(-6+4)/2 = -1.'
             },
             { // 60
                 texto: "Dos rectas son perpendiculares si el producto de sus pendientes es:",
                 opciones: ["A) 0", "B) 1", "C) -1", "D) ∞"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Geometría',
                 feedback: 'm1·m2 = -1 para perpendicularidad.'
             },
@@ -919,35 +919,35 @@
             { // 61
                 texto: "¿Qué número sigue en la sucesión: 2, 5, 10, 17, ...?",
                 opciones: ["A) 24", "B) 26", "C) 28", "D) 30"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Analítico',
                 feedback: 'Diferencias: 3,5,7,... la siguiente diferencia es 9 → 17+9=26.'
             },
             { // 62
                 texto: "¿Qué letra continúa en la serie: A, C, F, J, ...?",
                 opciones: ["A) M", "B) N", "C) O", "D) P"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Analítico',
                 feedback: 'Posiciones: 1,3,6,10,... diferencias 2,3,4 → siguiente 5 → 10+5=15 → O.'
             },
             { // 63
                 texto: "¿Qué figura sigue en la secuencia? (patrón de rotación)",
                 opciones: ["A) Triángulo", "B) Cuadrado", "C) Círculo", "D) Rombo"],
-                correcta: 1, // B (suponiendo patrón)
+                correcta: 1,
                 tema: 'Analítico',
                 feedback: 'Patrón: círculo, cuadrado, triángulo, ... luego cuadrado (depende de la imagen).'
             },
             { // 64
                 texto: "El término general de la sucesión 3, 7, 11, 15, ... es:",
                 opciones: ["A) 4n-1", "B) 4n+1", "C) 3n", "D) 3n+1"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Analítico',
                 feedback: 'a₁=3, diferencia 4 → an = 4n-1.'
             },
             { // 65
                 texto: "¿Qué número falta en la secuencia: 1, 1, 2, 3, 5, 8, ...?",
                 opciones: ["A) 11", "B) 12", "C) 13", "D) 14"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Analítico',
                 feedback: 'Sucesión de Fibonacci: cada término suma los dos anteriores → 5+8=13.'
             },
@@ -955,105 +955,105 @@
             { // 66
                 texto: "La derivada de f(x) = 3x² es:",
                 opciones: ["A) 6x", "B) 3x", "C) 2x", "D) 6"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: 'd/dx (ax^n) = n·a·x^(n-1) → 2·3x = 6x.'
             },
             { // 67
                 texto: "La integral indefinida ∫ 2x dx es:",
                 opciones: ["A) x² + C", "B) x²", "C) 2x² + C", "D) 2x"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: '∫ x^n dx = x^(n+1)/(n+1) + C → ∫ 2x dx = 2·(x²/2) = x² + C.'
             },
             { // 68
                 texto: "El límite de (x²-1)/(x-1) cuando x→1 es:",
                 opciones: ["A) 0", "B) 1", "C) 2", "D) ∞"],
-                correcta: 2, // C
+                correcta: 2,
                 tema: 'Cálculo',
                 feedback: 'Factorizar: (x-1)(x+1)/(x-1) = x+1 → límite = 2.'
             },
             { // 69
                 texto: "La derivada de f(x) = sen x es:",
                 opciones: ["A) cos x", "B) -cos x", "C) -sen x", "D) sec x"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: 'Derivada de sen x = cos x.'
             },
             { // 70
                 texto: "∫ (1/x) dx es igual a:",
                 opciones: ["A) ln|x| + C", "B) e^x + C", "C) 1/x² + C", "D) x ln x + C"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: '∫ (1/x) dx = ln|x| + C.'
             },
             { // 71
                 texto: "La derivada de e^(3x) es:",
                 opciones: ["A) e^(3x)", "B) 3e^(3x)", "C) 3e^x", "D) e^(3x)/3"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Cálculo',
-                feedback: 'd/dx e^(u) = e^(u)·u' → 3e^(3x).'
+                feedback: 'd/dx e^(u) = e^(u)·u\' → 3e^(3x).'
             },
             { // 72
                 texto: "El valor de f'(2) si f(x)= x³ - 3x es:",
                 opciones: ["A) 6", "B) 9", "C) 12", "D) 15"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Cálculo',
-                feedback: 'f'(x)=3x²-3 → f'(2)=12-3=9.'
+                feedback: 'f\'(x)=3x²-3 → f\'(2)=12-3=9.'
             },
             { // 73
                 texto: "La derivada de ln(2x) es:",
                 opciones: ["A) 1/x", "B) 1/(2x)", "C) 2/x", "D) 1/2x"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
-                feedback: 'd/dx ln(u) = u'/u → 2/(2x)=1/x.'
+                feedback: 'd/dx ln(u) = u\'/u → 2/(2x)=1/x.'
             },
             { // 74
                 texto: "∫₀¹ x² dx es igual a:",
                 opciones: ["A) 1/3", "B) 1", "C) 2", "D) 1/2"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: '[x³/3]₀¹ = 1/3.'
             },
             { // 75
                 texto: "La pendiente de la recta tangente a f(x)=x² en x=2 es:",
                 opciones: ["A) 2", "B) 4", "C) 6", "D) 8"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Cálculo',
-                feedback: 'f'(x)=2x → f'(2)=4.'
+                feedback: 'f\'(x)=2x → f\'(2)=4.'
             },
             { // 76
                 texto: "El límite de (3x+2)/(x-1) cuando x→∞ es:",
                 opciones: ["A) 0", "B) 3", "C) 2", "D) ∞"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Cálculo',
                 feedback: 'Los grados son iguales, límite = coeficiente principal 3/1 = 3.'
             },
             { // 77
                 texto: "La derivada de f(x)= cos x es:",
                 opciones: ["A) sen x", "B) -sen x", "C) -cos x", "D) tan x"],
-                correcta: 1, // B
+                correcta: 1,
                 tema: 'Cálculo',
                 feedback: 'd/dx cos x = -sen x.'
             },
             { // 78
                 texto: "∫ (2x+1) dx es:",
                 opciones: ["A) x²+x+C", "B) 2x²+x+C", "C) x²+1+C", "D) 2x+1+C"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: '∫ 2x dx = x²; ∫ 1 dx = x.'
             },
             { // 79
                 texto: "La derivada de f(x)=√x es:",
                 opciones: ["A) 1/(2√x)", "B) 1/(√x)", "C) 2√x", "D) 1/2x"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
-                feedback: 'f(x)=x^(1/2) → f'(x)= (1/2)x^(-1/2) = 1/(2√x).'
+                feedback: 'f(x)=x^(1/2) → f\'(x)= (1/2)x^(-1/2) = 1/(2√x).'
             },
             { // 80
                 texto: "El valor de ∫₋₁¹ x³ dx es:",
                 opciones: ["A) 0", "B) 1", "C) 2", "D) -1"],
-                correcta: 0, // A
+                correcta: 0,
                 tema: 'Cálculo',
                 feedback: 'Función impar en intervalo simétrico → integral = 0.'
             }
@@ -1062,8 +1062,8 @@
         // ==============================================================
         // CONFIGURACIÓN GOOGLE SHEETS
         // ==============================================================
-        // IMPORTANTE: Reemplaza con tu URL de Apps Script
-        const URL_GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzaVw_KFz_-S8Ldwnpk_yRBX2E8K4NQfgQD27fX7-nvM2ZdlWH5xha_Ez4NXK8BrUpqrA/exec';
+        // IMPORTANTE: Reemplaza con tu URL de Apps Script (sin espacios)
+        const URL_GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzqyIn7YC0EWtMyz62FX0Qav-VQwDtTCNv8IQf5kylxK0R569GDMJgNwtMp3zDjAaULEw/exec'; // ← CAMBIA ESTO
 
         // Estado
         let preguntaActual = 0;
